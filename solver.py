@@ -124,7 +124,7 @@ def is_valid(board, num, pos):
     return True
 
 def solution_checker(board):
-    ''' solution checker replacing solution.py '''
+    ''' solution checker replacing solution.py by utilizing the is_valid function to check the final grid if it is up to the mark.'''
     for i in range(len(board)):
         for j in range(len(board[0])):
             num = board[i][j]
