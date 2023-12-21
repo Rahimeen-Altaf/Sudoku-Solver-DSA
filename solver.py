@@ -1,6 +1,6 @@
 import os
 import platform
-
+import math
 # Clear the console screen based on the operating system
 if platform.system() == 'Windows':
     CLEAR = 'cls'
@@ -123,6 +123,20 @@ def is_valid(board, num, pos):
 
     return True
 
+def solution_checker(board):
+    ''' solution checker replacing solution.py by utilizing the is_valid function to check the final grid if it is up to the mark.'''
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            num = board[i][j]
+
+            # Check row, column, and subgrid constraints
+            if not is_valid(board, num, (i, j)):
+                print(f"Constraint violated at ({i}, {j}): {num}")
+                return False
+
+    return True
+
+
 # Function to print the Sudoku grid
 def print_sudoku(board):
     for i in range(len(board)):
@@ -155,19 +169,10 @@ input("\nPress Enter to See the Solution...")
 # Solve the Sudoku puzzle
 solve(sudoku)
 
-# Convert the solution to a string for verification
-my_solution = ''
-for i in range(user_input_size):
-    for j in range(user_input_size):
-        my_solution = my_solution + str(sudoku[i][j])
-
-# Verify the solution
-if my_solution == solution:
+if solution_checker(sudoku):
     os.system(CLEAR)
     print("\nThe solution is verified\n")
     print_sudoku(sudoku)
 else:
     os.system(CLEAR)
-    print("\nExpected Solution: \t", solution)
-    print("Your Solution: \t\t", my_solution)
     print("\nYour solution is incorrect. Please try again.")
