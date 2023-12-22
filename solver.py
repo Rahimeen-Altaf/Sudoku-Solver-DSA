@@ -1,6 +1,5 @@
 import os
 import platform
-import math
 # Clear the console screen based on the operating system
 if platform.system() == 'Windows':
     CLEAR = 'cls'
