@@ -38,17 +38,17 @@ user_input_percentage = get_user_input_percentage()
 if user_input_size == 4:
     if user_input_percentage == 30:
         from puzzles import puzzle4x4_30_0 as puzzle
-        from solutions import solution4x4_30_0 as solution
+        
     else:
         from puzzles import puzzle4x4_70_0 as puzzle
-        from solutions import solution4x4_70_0 as solution
+        
 elif user_input_size == 9:
     if user_input_percentage == 30:
         from puzzles import puzzle9x9_30_0 as puzzle
-        from solutions import solution9x9_30_0 as solution
+        
     else:
         from puzzles import puzzle9x9_70_0 as puzzle
-        from solutions import solution9x9_70_0 as solution
+        
 
 # Initialize the Sudoku grid
 sudoku = []
