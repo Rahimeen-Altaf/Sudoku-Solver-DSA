@@ -1,10 +1,30 @@
 import os
 import platform
+
 # Clear the console screen based on the operating system
 if platform.system() == 'Windows':
     CLEAR = 'cls'
 else:
     CLEAR = 'clear'
+
+# Function to load puzzle data from a text file
+def load_puzzle_data(size, percentage):
+    filename = 'puzzles.txt'
+    with open(filename, 'r') as file:
+        content = file.read()
+        puzzles = content.split('\n\n')  # Each puzzle is separated by two newline characters
+
+    target_label = f'{size}x{size} {percentage}% puzzles'
+    for puzzle_section in puzzles:
+        if target_label in puzzle_section:
+            puzzle_lines = puzzle_section.split('\n')
+            puzzle = ''.join(puzzle_lines[1])
+            return puzzle
+
+    print(f"No puzzle found for size {size} and percentage {percentage}.")
+    return ""  # or return a default puzzle or handle the situation accordingly
+
+
 
 # Function to get user input for the size of the Sudoku grid
 def get_user_input_size():
@@ -34,21 +54,8 @@ def get_user_input_percentage():
 user_input_size = get_user_input_size()
 user_input_percentage = get_user_input_percentage()
 
-# Load puzzle and solution based on user input
-if user_input_size == 4:
-    if user_input_percentage == 30:
-        from puzzles import puzzle4x4_30_0 as puzzle
-        
-    else:
-        from puzzles import puzzle4x4_70_0 as puzzle
-        
-elif user_input_size == 9:
-    if user_input_percentage == 30:
-        from puzzles import puzzle9x9_30_0 as puzzle
-        
-    else:
-        from puzzles import puzzle9x9_70_0 as puzzle
-        
+# Load puzzle based on user input
+puzzle = load_puzzle_data(user_input_size, user_input_percentage)
 
 # Initialize the Sudoku grid
 sudoku = []
@@ -60,6 +67,8 @@ for i in range(len(puzzle)):
     if (i + 1) % user_input_size == 0:
         sudoku.append(row)
         row = []
+
+
 
 # Function to solve the Sudoku puzzle using backtracking
 def solve(board):
@@ -170,8 +179,8 @@ solve(sudoku)
 
 if solution_checker(sudoku):
     os.system(CLEAR)
-    print("\nThe solution is verified\n")
     print_sudoku(sudoku)
+    print("\nThe solution is verified\n")
 else:
     os.system(CLEAR)
     print("\nYour solution is incorrect. Please try again.")
